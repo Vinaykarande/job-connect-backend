@@ -22,14 +22,16 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 const corsOption = {
-    origin: 'http//localhost:5173',
-    credentials: true
-}
+    origin: 'http://localhost:5173', // Correct the URL here
+    credentials: true,
+};
+
 
 app.use(cors(corsOption));
 
 // api's
-app.use("api/v1/user", userRoute);
+app.use("/api/v1/user", userRoute);
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, (req,res)=>{

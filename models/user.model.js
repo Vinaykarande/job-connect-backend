@@ -1,4 +1,6 @@
-import { compare } from "bcryptjs";
+import pkg from 'bcryptjs';
+const { compare } = pkg;
+
 import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     fullname:{

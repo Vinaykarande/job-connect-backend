@@ -7,10 +7,20 @@ export const register = async (req, res) => {
         const { fullname, email, phoneNumber, password, role } = req.body;
         if (!fullname || !email || !phoneNumber || !password || !role) {
             return res.status(400).json({
-                message: "Something is missing",
+                message: "Something is missing while registering",
                 success: false
             });
         }
+
+        // Convert phoneNumber to number
+        const phone = Number(phoneNumber);
+        if (isNaN(phone)) {
+            return res.status(400).json({
+                message: "Invalid phone number",
+                success: false
+            });
+        }
+        
         const user = await User.findOne({ email });
         if (user) {
             return res.status(400).json({
@@ -26,8 +36,8 @@ export const register = async (req, res) => {
             email,
             phoneNumber,
             password: hashedPassword,
-            role
-        })
+            role,
+        });
 
         return res.status(201).json({
             message: "Account Created",
@@ -125,7 +135,10 @@ export const updateProfile = async (req,res) =>{
 
         // file setup
 
-        const skillsArray = skills.split(",");
+        let skillsArray;
+        if(skills){
+            skillsArray = skills.split(",");
+        }
         const userId = req.id;
         let user = await User.findById(userId);
 
@@ -137,11 +150,11 @@ export const updateProfile = async (req,res) =>{
         }
 
         //updating data
-        user.fullname = fullname,
-        user.email = email,
-        user.phoneNumber = phoneNumber,
-        user.profile.bio = bio,
-        user.profile.skills = skillsArray
+        if(fullname) user.fullname = fullname
+        if(email) user.email = email
+        if(phoneNumber) user.phoneNumber = phoneNumber
+        if(bio) user.profile.bio = bio
+        if(skills) user.profile.skills = skillsArray
 
         //resume 
 
