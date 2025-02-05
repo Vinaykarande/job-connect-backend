@@ -1,41 +1,38 @@
-import pkg from 'bcryptjs';
-const { compare } = pkg;
-
 import mongoose from "mongoose";
+
 const userSchema = new mongoose.Schema({
-    fullname:{
+    fullname: {
         type: String,
-        require: true
+        required: true
     },
-    email:{
+    email: {
         type: String,
-        require: true,
+        required: true,
         unique: true
     },
-    phoneNumber:{
+    phoneNumber: {
         type: Number,
-        require: true
+        required: true
     },
     password:{
-        type: String,
-        require: true
+        type:String,
+        required:true,
     },
     role:{
-        type: String,
+        type:String,
         enum:['student','recruiter'],
-        require:true
+        required:true
     },
     profile:{
         bio:{type:String},
         skills:[{type:String}],
-        resume:{type: String},
-        resumeOriginalName:{type: String},
-        company:{type: mongoose.Schema.Types.ObjectId, ref:'Company'},
+        resume:{type:String}, // URL to resume file
+        resumeOriginalName:{type:String},
+        company:{type:mongoose.Schema.Types.ObjectId, ref:'Company'}, 
         profilePhoto:{
-            type: String,
-            default: ""
+            type:String,
+            default:""
         }
-    }
-},{timestamps: true});
-
-export const User = mongoose.model('User',userSchema);
+    },
+},{timestamps:true});
+export const User = mongoose.model('User', userSchema);

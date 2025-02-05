@@ -1,46 +1,52 @@
 import mongoose from "mongoose";
+
 const jobSchema = new mongoose.Schema({
-    title:{
+    title: {
         type: String,
-        require: true
+        required: true
     },
-    description:{
+    description: {
         type: String,
-        require: true
+        required: true
     },
-    requirements:[{
+    requirements: [{
         type: String
     }],
-    salary:{
+    salary: {
         type: Number,
-        require: true
+        required: true
     },
-    location:{
+    experienceLevel:{
+        type:Number,
+        required:true,
+    },
+    location: {
         type: String,
-        require: true
+        required: true
     },
-    jobType:{
+    jobType: {
         type: String,
-        require: true
+        required: true
     },
-    position:{
+    position: {
         type: Number,
-        require: true
+        required: true
     },
-    company:{
+    company: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'Company',
-        require: true
+        ref: 'Company',
+        required: true
     },
-    created_by:{
+    created_by: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'User',
-        require: true
+        ref: 'User',
+        required: true
     },
-    applications:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Application'
-    }]
-},{timestamps: true});
-
-export const Job = mongoose.model("Job",jobSchema);
+    applications: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Application',
+        }
+    ]
+},{timestamps:true});
+export const Job = mongoose.model("Job", jobSchema);
